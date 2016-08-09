@@ -3,28 +3,29 @@
 ##############################################################################
 # Imports
 from sys import exit
+import sys
 
 # Body
 
 
 def infinite_stairway_room(count=0):
-    print("You walk through the door to see a dimly lit hallway.")
+    print("{} walks through the door to see a dimly lit hallway.".format(sys.argv[1]))
     print("At the end of the hallway is a", count * 'long ', 'staircase going towards some light')
     next = input("> ")
     
     # infinite stairs option
     if next == "take stairs":
-        print('You take the stairs')
+        print('{} take the stairs'.format(sys.argv[1]))
         if (count > 0):
-            print("but you're not happy about it")
+            print("but {} is not happy about it".format(sys.argv[1]))
         infinite_stairway_room(count + 1)
     # option 2 == ?????
-    if next == option_2:
+    if next == "go back":
         pass
 
 
 def gold_room():
-    print("This room is full of gold.  How much do you take?")
+    print("This room is full of gold.  How much do you take, {}?".format(sys.argv[1]) )
 
     next = input("> ")
     if "0" in next or "1" in next:
@@ -33,10 +34,10 @@ def gold_room():
         dead("Man, learn to type a number.")
 
     if how_much < 50:
-        print("Nice, you're not greedy, you win!")
+        print("Nice, you're not greedy, {} wins!".format(sys.argv[1]))
         exit(0)
     else:
-        dead("You greedy goose!")
+        dead("{} greedy goose!".format(sys.argv[1]))
 
 
 def bear_room():
@@ -50,9 +51,9 @@ def bear_room():
         next = input("> ")
 
         if next == "take honey":
-            dead("The bear looks at you then slaps your face off.")
+            dead("The bear looks at {} then slaps your face off.".format(sys.argv[1]))
         elif next == "taunt bear" and not bear_moved:
-            print("The bear has moved from the door. You can go through it now.")
+            print("The bear has moved from the door. {} can go through it now.".format(sys.argv[1]))
             bear_moved = True
         elif next == "taunt bear" and bear_moved:
             dead("The bear gets pissed off and chews your leg off.")
@@ -63,18 +64,31 @@ def bear_room():
 
 
 def cthulhu_room():
-    print("Here you see the great evil Cthulhu.")
-    print("He, it, whatever stares at you and you go insane.")
-    print("Do you flee for your life or eat your head?")
+    print("Here {} sees the great evil Cthulhu.".format(sys.argv[1]))
+    print("He, it, whatever stares at {} and {} goes insane.".format(sys.argv[1]))
+    print("Does {} flee for your life or eat your head?".format(sys.argv[1]))
 
     next = input("> ")
 
     if "flee" in next:
-        start()
+        main()
     elif "head" in next:
         dead("Well that was tasty!")
     else:
         cthulhu_room()
+
+
+def back_room():
+    print("You enter the room and everybody is having a party with python.  They ask - what's your name?")
+
+    visitor_name = input(">")
+
+    while(visitor_name == ""):
+        print("Sorry, I didn't hear your name.  Please try again")
+        visitor_name = input(">")
+    
+    print("Welcome to our programmer party, " + visitor_name)
+    exit(0)
 
 
 def dead(why):
@@ -83,20 +97,24 @@ def dead(why):
 
 
 ############################################################################
-def start():
+def main():
     # START the TextAdventure game
-    print("You are in a dark room.")
-    print("There is a door to your right and left.")
-    print("Which one do you take?")
+    print("{} is in a dark room.".format(sys.argv[1]))
+    print("There is a door to your right and left and straight and back.")
+    print("Which one does {} take?".format(sys.argv[1]))
 
     next = input("> ")
 
     if next == "left":
-        bear_room()
+        bear_room()        # tested ok
     elif next == "right":
         cthulhu_room()
+    elif next == "straight":
+        infinite_stairway_room()
+    elif next == "back":
+        back_room()
     else:
-        dead("You stumble around the room until you starve.")
+        dead("{} stumbles around the room until (s)he starves.".format(sys.argv[1]))
 
 if __name__ == '__main__':
-    start()
+    main()

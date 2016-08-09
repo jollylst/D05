@@ -8,10 +8,21 @@
 
 # Body
 
+def read_file():
+	fp = open("words.txt", "r")
+	lines = fp.readlines()
+	
+	for word in lines:
+		word_no_space = word.strip()
+		
+		if len(word_no_space) > 20:
+			print(word_no_space)
+
+
 
 ##############################################################################
 def main():
-    pass  # Call your functions here.
+    read_file()  # Call your functions here.
 
 if __name__ == '__main__':
     main()
